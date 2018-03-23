@@ -40,9 +40,9 @@ let add_inductive ((k,i):Names.inductive)(d:Data.t) =
 let add_constructor(((k,i),j):Names.constructor)(d:Data.t) =
   Data.add (Globnames.ConstructRef ((k,i),j)) d
 
-let collect_long_names (c:Term.constr) (acc:Data.t) =
+let collect_long_names (c:Constr.t) (acc:Data.t) =
   let rec add c acc =
-    match Term.kind_of_term c with
+    match Constr.kind c with
         Term.Rel _ -> acc
       | Term.Var x -> add_identifier x acc
       | Term.Meta _ -> assert false
@@ -74,11 +74,9 @@ let collect_dependance gref =
   | Globnames.ConstRef cst ->
       let cb = Environ.lookup_constant cst (Global.env()) in
       let cl = match Global.body_of_constant_body cb with
-         Some e -> [e]
+         Some (e,_) -> [e]
 	| None -> [] in
-      let cl = match cb.Declarations.const_type with
-        | Declarations.RegularArity t -> t::cl
-        | Declarations.TemplateArity _ ->  cl in
+      let cl = cb.Declarations.const_type :: cl in
       List.fold_right collect_long_names cl Data.empty
   | Globnames.IndRef i | Globnames.ConstructRef (i,_) ->
       let _, indbody = Global.lookup_inductive i in
@@ -93,7 +91,7 @@ let display_dependance gref =
       Feedback.msg_notice (str"[" ++ ((Data.fold pp) d (str "]")))
   in try let data = collect_dependance gref in display data
   with NoDef gref ->
-    Feedback.msg_error (Printer.pr_global gref ++ str " has no value")
+    CErrors.user_err (Printer.pr_global gref ++ str " has no value")
 
 VERNAC COMMAND EXTEND Searchdepend CLASSIFIED AS QUERY
    ["SearchDepend" global(ref) ] -> [ display_dependance (Nametab.global ref) ]
