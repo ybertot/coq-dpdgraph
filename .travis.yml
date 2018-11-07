@@ -1,29 +1,37 @@
-sudo: required
 dist: trusty
-language: c
-cache:
-  apt: true
-  directories:
-    - $HOME/.opam
-install:
-- sudo add-apt-repository --yes ppa:avsm/ppa
-- sudo apt-get update -qq
-- sudo apt-get install -qq -y opam
-- opam --version
-- opam init -y
-- opam switch 4.07.0
-- eval $(opam config env)
-- opam config var root
-- opam repo add coq-core-dev https://coq.inria.fr/opam/core-dev || true
-- opam install -y ocamlfind ocamlgraph
-- git clone --depth=1 https://github.com/coq/coq
-- opam show --field=source-hash coq
-- sed -e 's/\(.\{8\}\).*/\1/' coq/.git/refs/heads/master
-- if [ "$(opam show --field=source-hash coq)" = "$(sed -e 's/\(.\{8\}\).*/\1/' coq/.git/refs/heads/master)" ] ; then true is $(opam show --field=source-hash coq) ; else opam uninstall coq ; fi ; rm -rf coq
-- travis_wait opam install -y coq.dev
-- opam list
+language: generic
+sudo: required
+
+services:
+ - docker
+
+env:
+  global:
+  - NJOBS="2"
+  - CONTRIB_NAME="coq-dpdgraph"
+  matrix:
+  - COQ_IMAGE="coqorg/coq:dev"
+
+install: |
+  # Prepare the COQ container
+  docker run -d - i --init --name=COQ -v ${TRAVIS_BUILD_DIR}:/home/coq/$CONTRIB_NAME -w /home/coq/$CONTRIB_NAME ${COQ_IMAGE}
+  docker exec COQ /bin/bash --login -c "
+    echo \"Build triggered by ${TRAVIS_EVENT_TYPE}\"
+    export PS4='+ \e[33;1m($0 @ line \$LINENO) \$\e[0m '
+    set -ex # -e = exit on failure; -x = trace for debug
+    opam list
+    "
 script:
-- autoconf
-- ./configure
-- make || exit $?
-- make test-suite
+- echo -e ${ANSI_YELLOW}Building $CONTRIB_NAME...${ANSI_RESET}" && echo - en 'travis_fold:start:testbuild\\r'
+- |
+  docker exec COQ /bin/bash --login -c "
+    export PS4='+ \e[33;1m($0 @ line \$LINENO) \$\e[0m '
+    set -ex
+    sudo chown -R coq:coq /home/coq/$CONTRIB_NAME
+    autoconf
+    ./configure
+    make || exist $?
+    make test-suite
+    "
+- docker stop COQ
+- echo -en 'travis_fold:end:testbuild\\r'
