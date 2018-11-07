@@ -30,7 +30,7 @@ script:
     sudo chown -R coq:coq /home/coq/$CONTRIB_NAME
     autoconf
     ./configure
-    make || exist $?
+    make || exit $?
     make test-suite
     "
 - docker stop COQ # optional
