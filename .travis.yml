@@ -3,7 +3,7 @@ language: generic
 sudo: required
 
 services:
- - docker
+- docker
 
 env:
   global:
@@ -14,18 +14,18 @@ env:
 
 install: |
   # Prepare the COQ container
-  docker run -d - i --init --name=COQ -v ${TRAVIS_BUILD_DIR}:/home/coq/$CONTRIB_NAME -w /home/coq/$CONTRIB_NAME ${COQ_IMAGE}
+  docker run -d -i --init --name=COQ -v ${TRAVIS_BUILD_DIR}:/home/coq/$CONTRIB_NAME -w /home/coq/$CONTRIB_NAME ${COQ_IMAGE}
   docker exec COQ /bin/bash --login -c "
     echo \"Build triggered by ${TRAVIS_EVENT_TYPE}\"
-    export PS4='+ \e[33;1m($0 @ line \$LINENO) \$\e[0m '
-    set -ex # -e = exit on failure; -x = trace for debug
+    export PS4='+ \e[33;1m(\$0 @ line \$LINENO) \$\e[0m '
+    set -ex  # -e = exit on failure; -x = trace for debug
     opam list
     "
 script:
-- echo -e ${ANSI_YELLOW}Building $CONTRIB_NAME...${ANSI_RESET}" && echo - en 'travis_fold:start:testbuild\\r'
+- echo -e "${ANSI_YELLOW}Building $CONTRIB_NAME...${ANSI_RESET}" && echo -en 'travis_fold:start:testbuild\\r'
 - |
   docker exec COQ /bin/bash --login -c "
-    export PS4='+ \e[33;1m($0 @ line \$LINENO) \$\e[0m '
+    export PS4='+ \e[33;1m(\$0 @ line \$LINENO) \$\e[0m '
     set -ex
     sudo chown -R coq:coq /home/coq/$CONTRIB_NAME
     autoconf
@@ -33,5 +33,5 @@ script:
     make || exist $?
     make test-suite
     "
-- docker stop COQ
+- docker stop COQ # optional
 - echo -en 'travis_fold:end:testbuild\\r'
