@@ -198,16 +198,16 @@ end = struct
     let is_prop = is_prop gref id in
     let acc = ("prop", if is_prop then "yes" else "no")::acc in
     let acc = match gref with
-      | Globnames.ConstRef cnst ->
+      | Names.GlobRef.ConstRef cnst ->
           let acc = ("kind", "cnst")::acc in
             add_cnst_attrib acc cnst
-      | Globnames.IndRef _ ->
+      | Names.GlobRef.IndRef _ ->
           let acc = ("kind", "inductive")::acc in
             acc
-      | Globnames.ConstructRef _ ->
+      | Names.GlobRef.ConstructRef _ ->
           let acc = ("kind", "construct")::acc in
             acc
-      | Globnames.VarRef _ -> assert false
+      | Names.GlobRef.VarRef _ -> assert false
     in acc
 
   let pp_attribs fmt attribs =
@@ -266,17 +266,6 @@ let locate_mp_dirpath qid =
 VERNAC COMMAND EXTEND DependGraphSetFile CLASSIFIED AS QUERY
 | ["Set" "DependGraph" "File" string(str)] -> { filename := str }
 END
-
-(*
-VERNAC ARGUMENT EXTEND dirpath
-| [ string(str) ] -> { Globnames.dirpath_of_string str }
-END
-
-VERNAC ARGUMENT EXTEND dirlist
-  | [ dirpath(d) dirlist(l)] -> { d::l }
-  | [ dirpath(d) ] -> { [d] }
-END
-*)
 
 VERNAC COMMAND EXTEND DependGraph CLASSIFIED AS QUERY
   | ["Print" "DependGraph" reference(ref) ] ->
