@@ -154,7 +154,7 @@ let add_gref_dpds opaque_access graph ~all n_gref todo =
         else g, td
   in
     try
-      let data = Searchdepend.collect_dependance ~opaque_access gref in
+      let data = Searchdepend.collect_dependance opaque_access gref in
       let graph, todo = Searchdepend.Data.fold add_dpd data (graph, todo) in
         graph, todo
     with Searchdepend.NoDef gref -> (* nothing to do *) graph, todo
