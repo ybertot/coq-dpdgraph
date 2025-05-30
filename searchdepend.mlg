@@ -83,7 +83,7 @@ let display_dependance ~opaque_access gref =
       Printer.pr_global gr ++ str "(" ++ int n ++ str ")" ++ spc() ++s
     in
       Feedback.msg_notice (str"[" ++ ((Data.fold pp) d (str "]")))
-  in try let data = collect_dependance ~opaque_access gref in display data
+  in try let data = collect_dependance opaque_access gref in display data
   with NoDef gref ->
     CErrors.user_err (Printer.pr_global gref ++ str " has no value")
 
