@@ -60,7 +60,7 @@ let collect_long_names avoid (c:Constr.t) (acc:Data.t) =
 
 exception NoDef of Names.GlobRef.t
 
-let collect_dependance opaque_access:Global.indirect_accessor gref =
+let collect_dependance (~opaque_access:Global.indirect_accessor) gref =
   let open Names in
   let open GlobRef in
   match gref with
