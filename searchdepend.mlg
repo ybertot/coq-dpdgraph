@@ -91,5 +91,5 @@ let display_dependance ~opaque_access gref =
 
 VERNAC COMMAND EXTEND Searchdepend CLASSIFIED AS QUERY STATE opaque_access
 | ["SearchDepend" global(ref) ] ->
-  {fun ~open_access -> display_dependance open_access (Nametab.global ref) }
+  {fun ~open_access -> display_dependance ~open_access (Nametab.global ref) }
 END
