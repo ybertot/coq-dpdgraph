@@ -281,7 +281,7 @@ END
 
 VERNAC COMMAND EXTEND DependGraph CLASSIFIED AS QUERY STATE opaque_access
   | ["Print" "DependGraph" reference(ref) ] ->
-      { fun ~opaque_access -> mk_dpds_graph open_access (Nametab.global ref) }
+      { fun ~opaque_access -> mk_dpds_graph opaque_access (Nametab.global ref) }
   | ["Print" "FileDependGraph" reference_list(dl) ] ->
       { fun ~opaque_access -> 
         file_graph_depend opaque_access (List.map locate_mp_dirpath dl) }
