@@ -60,7 +60,7 @@ let collect_long_names avoid (c:Constr.t) (acc:Data.t) =
 
 exception NoDef of Names.GlobRef.t
 
-let collect_dependance (~opaque_access:Global.indirect_accessor) gref =
+let collect_dependance opaque_access gref =
   let open Names in
   let open GlobRef in
   match gref with
@@ -90,5 +90,6 @@ let display_dependance ~opaque_access gref =
 }
 
 VERNAC COMMAND EXTEND Searchdepend CLASSIFIED AS QUERY STATE opaque_access
-| ["SearchDepend" global(ref) ] -> { display_dependance (Nametab.global ref) }
+| ["SearchDepend" global(ref) ] ->
+  {fun ~open_access -> display_dependance (Nametab.global ref) }
 END
