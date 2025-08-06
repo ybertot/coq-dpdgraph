@@ -20,7 +20,7 @@ build: [make "-j%{jobs}%"]
 install: [make "install"]
 depends: [
   "ocaml" {>= "4.09.0"}
-  "coq" {= "dev"}
+  "coq" 
   "conf-autoconf" {build & dev}
   "ocamlgraph" 
 ]

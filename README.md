@@ -36,7 +36,6 @@ to visualize dependency graphs and find unused definitions.
 - Rocq-community maintainer(s):
   - Yves Bertot ([**@ybertot**](https://github.com/ybertot))
 - License: [GNU Lesser General Public License v2.1](LICENSE)
-- Compatible Rocq/Coq versions: master (use the corresponding branch or release for other Coq versions)
 - Compatible OCaml versions: 4.09.0 or later
 - Additional dependencies:
   - autoconf (except for releases)
