@@ -121,9 +121,9 @@ build: |-
 
   ### Install using opam
 
-  If you use opam with recent versions of Rocq you can install
+  If you use opam with recent versions of Rocq or Coq you can install
   `coq-dpdgraph` and `ocamlgraph` using
-  
+
       $ opam repo add coq-released https://rocq-prover.org/opam/released
       $ opam install coq-dpdgraph
 
