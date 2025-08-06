@@ -103,7 +103,7 @@ instead of `make` in all previous commands.
 
 ### Install using opam
 
-If you use opam with the latests version of Rocq you can install
+If you use opam with the latest versions of Rocq you can install
 `coq-dpdgraph` and `ocamlgraph` using
 
     $ opam repo add coq-released https://rocq-prover.org/opam/released
