@@ -55,6 +55,11 @@ dependencies:
 tested_rocq_opam_versions:
 - version: dev
 
+action_appendix: |2-
+            export: 'OPAMWITHTEST'
+          env:
+            OPAMWITHTEST: true
+
 namespace: dpdgraph
 
 keywords:
