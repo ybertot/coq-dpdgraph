@@ -1,7 +1,7 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #            This file is part of the DpdGraph tools.
-#  Copyright (C) 2025 Yves Bertot (Yves.Bertot@inria.fr)
-#                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Copyright (C) 2009-2025 Anne Pacalet (Anne.Pacalet@free.fr)
+#                      and Yves Bertot (Yves.Bertot@inria.fr)
 #      This file is distributed under the terms of the
 #       GNU Lesser General Public License Version 2.1
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -23,6 +23,10 @@ uninstall : Make_coq
 
 tests test : Make_coq
 	make -f $< $@
+
+Make_coq : Make
+	rocq makefile -f $< -o $@
+
 #-------------------------------------------------------------------------------
 DISTRIBUTED+=Makefile LICENSE README.md configure Makefile.in
 
