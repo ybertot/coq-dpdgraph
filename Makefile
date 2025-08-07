@@ -15,8 +15,7 @@ all : Make_coq
 install : Make_coq
 	make -f $< $@
 
-clean : Make_coq
-	make -f $< $@
+clean : clean_coq clean_test
 
 uninstall : Make_coq
 	make -f $< $@
