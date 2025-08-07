@@ -31,7 +31,7 @@ $(DPD2DOT) : $(MLI_COMMON) $(ML_COMMON) $(MLI_DPD2DOT) $(ML_DPD2DOT) has_ocamlgr
 
 $(DPDUSAGE) : $(CMOS_DPDUSAGE) $(CMIS_DPDUSAGE)
 	$(DPD_COMPILE) -o $@ $(MLI_COMMON) $(ML_COMMON) \
-         $(MLI_DPD2USAGE) $(ML_DPDUSAGE)
+         $(MLI_DPDUSAGE) $(ML_DPDUSAGE)
 
 include Make_coq.conf
 
