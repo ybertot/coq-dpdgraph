@@ -36,7 +36,7 @@ $(DPDUSAGE) : $(CMOS_DPDUSAGE) $(CMIS_DPDUSAGE)
 include Make_coq.conf
 
 install-extra :: $(DPD2DOT) $(DPDUSAGE)
-	cp $(DPD2DOT) $(DPDUSAGE) $(COQMF_COQLIB)/../../bin
+	cp $(DPD2DOT) $(DPDUSAGE) $(COQLIB)/../../bin
 
 uninstall ::
 	rm -f $(COQMF_COQLIB)/../../bin/$DPD2DOT)
