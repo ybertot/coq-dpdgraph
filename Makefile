@@ -42,19 +42,12 @@ distrib : $(NAME)-$(VERSION).tgz
 
 
 #-------------------------------------------------------------------------------
-# Configuration
+# testing
+
 
 #-------------------------------------------------------------------------------
 clean_coq : Make_coq
 	$(MAKE) -f $< clean
-
-clean_test :
-	rm -f $(TESTS) $(TESTS_LOG) $(TESTS_OK)
-	rm -f $(TESTDIR)/Test.vo $(TESTDIR)/Test.glob
-	rm -f $(TESTDIR)/Morph.vo $(TESTDIR)/Morph.glob
-	rm -f $(TESTDIR)/Polymorph.vo $(TESTDIR)/Polymorph.glob
-	rm -f $(TESTDIR)/PrimitiveProjections.vo $(TESTDIR)/PrimitiveProjections.glob
-	rm -f  $(TESTDIR)/.*.vo.aux
 
 clean_config:
 	rm -rf autom4te.cache
