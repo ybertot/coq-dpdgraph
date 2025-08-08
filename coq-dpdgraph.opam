@@ -21,7 +21,6 @@ install: [make "install"]
 depends: [
   "ocaml" {>= "4.09.0"}
   "coq" 
-  "conf-autoconf" {build & dev}
   "ocamlgraph" 
 ]
 

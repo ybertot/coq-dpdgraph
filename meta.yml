@@ -43,11 +43,6 @@ supported_ocaml_versions:
 
 dependencies:
 - opam:
-    name: conf-autoconf
-    version: '{build & dev}'
-  description: |-
-    autoconf (except for releases)
-- opam:
     name: ocamlgraph
   description: |-
     [OCamlgraph](https://github.com/backtracking/ocamlgraph)
