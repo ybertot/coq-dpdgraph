@@ -20,7 +20,10 @@ clean : clean_coq clean_test
 uninstall : Make_coq
 	make -f $< $@
 
-tests test : Make_coq
+test : Make_coq
+	make -f $< $@
+
+clean_test : Make_coq
 	make -f $< $@
 
 Make_coq : Make
