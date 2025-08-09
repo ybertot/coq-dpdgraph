@@ -11,8 +11,24 @@ VERSION=1.0-9.0
 
 clean : clean_coq clean_test
 
-all install uninstall test test-suite clean_test : Make_coq
+all : Make_coq
 	make -f $< $@
+
+install : Make_coq
+	make -f $< $@
+
+uninstall : Make_coq
+	make -f $< $@
+
+test : Make_coq
+	make -f $< $@
+
+test-suite : Make_coq
+	make -f $< $@
+
+clean_test  : Make_coq
+	make -f $< $@
+
 
 Make_coq : Make
 	rocq makefile -f $< -o $@
@@ -39,19 +55,5 @@ distrib : $(NAME)-$(VERSION).tgz
 #-------------------------------------------------------------------------------
 clean_coq : Make_coq
 	$(MAKE) -f $< clean
-
-clean_config:
-	rm -rf autom4te.cache
-	rm -f configure config.log config.status
-	rm -r Makefile
-
-clean : clean_coq clean_test
-	rm -f $(GENERATED)
-	rm -f $(CMOS_DPDUSAGE) $(CMOS_DPD2DOT) $(CMXS) $(ML_ALL:%.ml=%.o) *.cmi
-	rm -f $(ML_ALL:%.ml=%.annot)
-	rm -f $(DPD2DOT) $(DPDUSAGE) $(DPDPLUGIN)
-	$(ECHO) "Use: make clean_config to remove configuration generated files"
-
-archi_clean: clean clean_config
 
 #-------------------------------------------------------------------------------
