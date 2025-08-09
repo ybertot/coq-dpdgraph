@@ -17,7 +17,7 @@ and produces files with dependency information. Includes tools
 to visualize dependency graphs and find unused definitions."""
 
 build: [make "-j%{jobs}%"]
-run-test: [make "-j%{jobs}%" "-f Make_coq test-suite TEST_INCLUDE=&quot;&quot;"]
+run-test: [make "-j%{jobs}%" "-f Make_coq test-suite TEST_INCLUDE="]
 install: [make "install"]
 depends: [
   "ocaml" {>= "4.09.0"}
