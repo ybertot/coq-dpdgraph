@@ -56,7 +56,7 @@ action_appendix: |2-
             OPAMWITHTEST: true
 
 test_target:
-   -f Make_coq test TEST_INCLUDE=""
+   -f Make_coq test-suite TEST_INCLUDE=""
 
 
 namespace: dpdgraph
