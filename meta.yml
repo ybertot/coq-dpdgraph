@@ -55,6 +55,9 @@ action_appendix: |2-
           env:
             OPAMWITHTEST: true
 
+test_target:
+   test-suite
+
 namespace: dpdgraph
 
 keywords:

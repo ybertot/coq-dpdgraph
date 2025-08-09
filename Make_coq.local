@@ -75,12 +75,12 @@ clean_test :
 .PRECIOUS : $(TESTS) $(TESTS_LOG) $(TESTS_ORACLE)
 
 .PHONY: tests test
-tests test : $(TESTS_OK)
+test : $(TESTS_OK)
 
 .PHONY: test-suite
 test-suite:
 	rm -f tests.ok
-	($(MAKE) tests && touch tests.ok) | tee tmp.log
+	($(MAKE) test && touch tests.ok) | tee tmp.log
 	if grep DIFFERENCES tmp.log >/dev/null 2>&1 ; then \
 		for i in $$(grep DIFFERENCES tmp.log | grep -o 'diff .*' | sed s'/diff //g' | sed s'/ /~/g'); do \
 			i="$$(echo "$$i" | sed s'/~/ /g')"; \
@@ -112,31 +112,33 @@ $(TESTDIR)/%.err.log: $(TESTDIR)/%.err.dpd $(DPD2DOT)
 %.svg : %.dot
 	dot -Tsvg -o$@ $<
 
+TEST_INCLUDE= -R .. dpdgraph -I ..
+
 $(TESTDIR)/Morph%.dpd : $(TESTDIR)/Morph.vo $(TESTDIR)/Morph.cmd $(DPDPLUGIN)
 	# cd to tests to generate .dpd file there.
-	cd $(TESTDIR); coqtop -R .. dpdgraph -I .. < Morph.cmd > /dev/null 2>&1
+	cd $(TESTDIR); coqtop $(TEST_INCLUDE) < Morph.cmd > /dev/null 2>&1
 
 $(TESTDIR)/Polymorph%.dpd : $(TESTDIR)/Polymorph.vo $(TESTDIR)/Polymorph.cmd \
                             $(DPDPLUGIN)
-	cd $(TESTDIR); coqtop -R .. dpdgraph -I .. < Polymorph.cmd
+	cd $(TESTDIR); coqtop $(TEST_INCLUDE) < Polymorph.cmd
 
 $(TESTDIR)/graph.dpd $(TESTDIR)/graph2.dpd: \
 	             $(TESTDIR)/Test.vo $(TESTDIR)/Test.cmd $(DPDPLUGIN)
 	# cd to tests to generate .dpd file there.
-	cd $(TESTDIR); coqtop -R .. dpdgraph -I .. < Test.cmd > /dev/null 2>&1
+	cd $(TESTDIR); coqtop $(TEST_INCLUDE) < Test.cmd > /dev/null 2>&1
 
 $(TESTDIR)/PrimitiveProjections.dpd $(TESTDIR)/PrimitiveProjections2.dpd: \
 	             $(TESTDIR)/PrimitiveProjections.vo $(TESTDIR)/PrimitiveProjections.cmd $(DPDPLUGIN)
 	# cd to tests to generate .dpd file there.
-	cd $(TESTDIR); coqtop -R .. dpdgraph -I .. < PrimitiveProjections.cmd > /dev/null 2>&1
+	cd $(TESTDIR); coqtop $(TEST_INCLUDE) < PrimitiveProjections.cmd > /dev/null 2>&1
 
 %.dpd : %.vo %.cmd
 	# cd to tests to generate .dpd file there.
-	cd $(TESTDIR); coqtop -R .. dpdgraph -I .. < $(*F).cmd > /dev/null 2>&1
+	cd $(TESTDIR); coqtop $(TEST_INCLUDE) < $(*F).cmd > /dev/null 2>&1
 
 $(TESTDIR)/search.log : $(TESTDIR)/Test.vo $(TESTDIR)/search.cmd $(DPDPLUGIN)
-	cat $(TESTDIR)/search.cmd | coqtop -R . dpdgraph -I . 2> /dev/null \
-	  | sed -e 's/Welcome to Rocq.*/Welcome to Rocq/' > $@
+	cd $(TESTDIR) ; coqtop $(TEST_INCLUDE) < search.cmd 2> /dev/null \
+	  | sed -e 's/Welcome to Rocq.*/Welcome to Rocq/' > ../$@
 
 %.dot : %.dpd  $(DPD2DOT)
 	$(DPD2DOT) $< > /dev/null

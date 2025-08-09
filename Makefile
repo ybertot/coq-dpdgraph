@@ -9,21 +9,9 @@
 NAME=coq-dpdgraph
 VERSION=1.0-9.0
 
-all : Make_coq
-	make -f $< $@
+main_target : all
 
-install : Make_coq
-	make -f $< $@
-
-clean : clean_coq clean_test
-
-uninstall : Make_coq
-	make -f $< $@
-
-test : Make_coq all
-	make -f $< $@
-
-clean_test : Make_coq
+all install uninstall test test-suite clean clean_test : Make_coq
 	make -f $< $@
 
 Make_coq : Make
@@ -51,19 +39,5 @@ distrib : $(NAME)-$(VERSION).tgz
 #-------------------------------------------------------------------------------
 clean_coq : Make_coq
 	$(MAKE) -f $< clean
-
-clean_config:
-	rm -rf autom4te.cache
-	rm -f configure config.log config.status
-	rm -r Makefile
-
-clean : clean_coq clean_test
-	rm -f $(GENERATED)
-	rm -f $(CMOS_DPDUSAGE) $(CMOS_DPD2DOT) $(CMXS) $(ML_ALL:%.ml=%.o) *.cmi
-	rm -f $(ML_ALL:%.ml=%.annot)
-	rm -f $(DPD2DOT) $(DPDUSAGE) $(DPDPLUGIN)
-	$(ECHO) "Use: make clean_config to remove configuration generated files"
-
-archi_clean: clean clean_config
 
 #-------------------------------------------------------------------------------
