@@ -9,21 +9,9 @@
 NAME=coq-dpdgraph
 VERSION=1.0-9.0
 
-all : Make_coq
-	make -f $< $@
-
-install : Make_coq
-	make -f $< $@
-
 clean : clean_coq clean_test
 
-uninstall : Make_coq
-	make -f $< $@
-
-test : Make_coq all
-	make -f $< $@
-
-clean_test : Make_coq
+all install uninstall test test-suite clean_test : Make_coq
 	make -f $< $@
 
 Make_coq : Make
