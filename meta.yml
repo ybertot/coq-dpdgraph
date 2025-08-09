@@ -55,6 +55,10 @@ action_appendix: |2-
           env:
             OPAMWITHTEST: true
 
+test_target:
+   -f Make_coq test TEST_INCLUDE=""
+
+
 namespace: dpdgraph
 
 keywords:
