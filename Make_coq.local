@@ -138,7 +138,7 @@ $(TESTDIR)/PrimitiveProjections.dpd $(TESTDIR)/PrimitiveProjections2.dpd: \
 
 $(TESTDIR)/search.log : $(TESTDIR)/Test.vo $(TESTDIR)/search.cmd $(DPDPLUGIN)
 	cd $(TESTDIR) ; coqtop $(TEST_INCLUDE) < search.cmd 2> /dev/null \
-	  | sed -e 's/Welcome to Rocq.*/Welcome to Rocq/' > $@
+	  | sed -e 's/Welcome to Rocq.*/Welcome to Rocq/' > ../$@
 
 %.dot : %.dpd  $(DPD2DOT)
 	$(DPD2DOT) $< > /dev/null
